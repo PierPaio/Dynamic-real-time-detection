@@ -1,21 +1,19 @@
+import React, { useState } from 'react';
 import './App.css';
+import FileUpload from './components/FileUpload';
 
 function App() {
+
+  const [csvdata, setCsvdata] = useState(null);
+
+  const handleFileUpload = (data) => {
+    setCsvdata(data);
+    console.log("Caricato con successo")
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <FileUpload onFileUpload={handleFileUpload} />
     </div>
   );
 }
