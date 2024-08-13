@@ -1,21 +1,40 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Plot from "react-plotly.js";
 import '../App.css';
 
 const GeneratedPlotly = ({ csvData }) => {
 
+    const [xAxisTitle, setXAxisTitle] = useState('');
+    const [yAxisTitle, setYAxisTitle] = useState('');
+    const [xValues, setXValues] = useState([]);
+    const [yValues, setYValues] = useState([]);
+
+    useEffect(() => {
+        if (!csvData) return;
+
+        // Converte i dati CSV in un array di oggetti (rows)
+        const rows = csvData.split('\n').map(row => row.split(','));
+        
+        const headers = rows[0];
+        const data = rows.slice(1);
+
+        //La prima colonna è X, la seconda Y
+        const xIndex = 0;  // Indice della colonna X
+        const yIndex = 1;  // Indice della colonna Y
+
+        // Imposta i titoli degli assi
+        setXAxisTitle(headers[xIndex]);
+        setYAxisTitle(headers[yIndex]);
+
+        // Estrai i valori delle colonne X e Y
+        setXValues(data.map(row => row[xIndex]));
+        setYValues(data.map(row => row[yIndex]));
+
+    }, [csvData]);
+
     if(!csvData) {
         return null;
     }
-
-    // Convert CSV data to an array of objects (rows)
-    const rows = csvData.split('\n').map(row => row.split(','));
-    //const headers = rows[0];
-    const data = rows.slice(1);
-
-    // Example: assuming the first column is X and the second column is Y
-    const xValues = data.map(row => row[0]);
-    const yValues = data.map(row => row[1]);
 
     return (
         <Plot
@@ -31,6 +50,8 @@ const GeneratedPlotly = ({ csvData }) => {
             layout={{ 
                 title: 'Plot from HTML file', 
                 autosize: true,
+                xaxis: { title: xAxisTitle },
+                yaxis: { title: yAxisTitle}
             }}
             config={{ responsive: true }}
             useResizeHandler={true}
