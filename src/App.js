@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import FileUpload from './components/FileUpload';
+import GeneratedHtml from './components/GeneratedHtml';
 
 function App() {
 
@@ -12,8 +13,9 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <FileUpload onFileUpload={handleFileUpload} />
+    <div className="container">
+      <FileUpload onFileUpload={handleFileUpload} className="csv"/>
+      <GeneratedHtml csvData={csvdata} />
     </div>
   );
 }

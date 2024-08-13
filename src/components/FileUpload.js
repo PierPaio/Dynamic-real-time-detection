@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.css';
 
 const FileUpload = ({ onFileUpload }) => {
     const[file, setFile] = useState(null);
