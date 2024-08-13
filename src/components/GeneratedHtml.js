@@ -1,4 +1,5 @@
 import React from "react";
+import '../App.css';
 
 const GeneratedHtml = ({ csvData }) => {
     if(!csvData) {
@@ -8,7 +9,7 @@ const GeneratedHtml = ({ csvData }) => {
     const rows = csvData.split('\n').map(row => row.split(','));
 
     const tableContent = (
-        <table className="table table-striped" border="1">
+        <table className="table table-striped">
             <thead>
                 <tr>
                     {rows[0].map((header, index) => (
@@ -30,7 +31,7 @@ const GeneratedHtml = ({ csvData }) => {
 
     return (
         <div>
-            <h2>Generated HTML:</h2>
+            <h3>Table with data:</h3>
             <div>{tableContent}</div>
         </div>
     );
