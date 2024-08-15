@@ -39,27 +39,27 @@ const FileUpload = ({ onFileUpload }) => {
     
     return (
         <div>
-      <input type="file" accept=".csv" onChange={(event) => {
-        handleFileChange(event);
-        handleUpload(event.target.files[0]);
-      }} style={{ display: 'none' }} id="file-input" />
-      
-      <label 
-        htmlFor="file-input" 
-        onDragOver={handleDragOver} 
-        onDragLeave={handleDragLeave} 
-        onDrop={handleDrop} 
-        style={{
-          border: '2px dashed #ccc',
-          padding: '20px',
-          textAlign: 'center',
-          cursor: 'pointer',
-          backgroundColor: dragOver ? '#f0f0f0' : '#fff'
-        }}
-      >
-        {file ? file.name : 'Drag & Drop your CSV file here or click to select'}
-      </label>
-      <button type="button" onClick={handleUpload} className="btn btn-primary custom-hover">CSV upload</button>
+          <input type="file" accept=".csv" onChange={(event) => {
+            handleFileChange(event);
+            handleUpload(event.target.files[0]);
+          }} style={{ display: 'none' }} id="file-input" />
+          
+          <label 
+            htmlFor="file-input" 
+            onDragOver={handleDragOver} 
+            onDragLeave={handleDragLeave} 
+            onDrop={handleDrop} 
+            style={{
+              border: '2px dashed #ccc',
+              padding: '20px',
+              textAlign: 'center',
+              cursor: 'pointer',
+              backgroundColor: dragOver ? '#f0f0f0' : '#fff'
+            }}
+          >
+            {file ? file.name : 'Drag & Drop your CSV file here or click to select'}
+          </label>
+          <button type="button" onClick={handleUpload} className="btn btn-primary custom-hover">CSV upload</button>
     </div>
     )
 };

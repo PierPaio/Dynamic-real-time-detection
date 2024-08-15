@@ -10,7 +10,7 @@ function App() {
 
   const handleFileUpload = (data) => {
     setCsvdata(data);
-    alert("File upload successfully!")
+    //alert("File upload successfully!")
   }
 
   return (

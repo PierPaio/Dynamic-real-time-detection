@@ -37,26 +37,29 @@ const GeneratedPlotly = ({ csvData }) => {
     }
 
     return (
-        <Plot
-            data={[
-                {
-                    x: xValues,
-                    y: yValues,
-                    type: "scatter",
-                    mode: "lines",
-                    marker: {color: 'blue'},
-                },
-            ]}
-            layout={{ 
-                title: 'Plot from HTML file', 
-                autosize: true,
-                xaxis: { title: xAxisTitle },
-                yaxis: { title: yAxisTitle}
-            }}
-            config={{ responsive: true }}
-            useResizeHandler={true}
-            style={{ width: "100%", height: "100%" }}
+        <div style={{ width: '100%' }}>
+            <Plot
+                data={[
+                    {
+                        x: xValues,
+                        y: yValues,
+                        type: "scatter",
+                        mode: "lines",
+                        marker: {color: 'blue'},
+                    },
+                ]}
+                layout={{ 
+                    height: 400,
+                    title: 'Plot from HTML file', 
+                    autosize: true,
+                    xaxis: { title: xAxisTitle },
+                    yaxis: { title: yAxisTitle}
+                }}
+                config={{ responsive: true }}
+                useResizeHandler={true}
+                style={{ width: "100%", height: "100%" }}
             />
+        </div>
     );
 };
 
