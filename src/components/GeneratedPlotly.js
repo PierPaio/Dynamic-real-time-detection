@@ -30,7 +30,7 @@ const GeneratedPlotly = ({ csvData }) => {
         setXValues(data.map(row => row[xIndex]));
         setYValues(data.map(row => row[yIndex]));
 
-    }, [csvData]);
+    }, [csvData]); //ogni volta che csvData cambia
 
     if(!csvData) {
         return null;
@@ -55,6 +55,7 @@ const GeneratedPlotly = ({ csvData }) => {
                     xaxis: { title: xAxisTitle },
                     yaxis: { title: yAxisTitle}
                 }}
+                //stile per fare in modo che diventi responsivo
                 config={{ responsive: true }}
                 useResizeHandler={true}
                 style={{ width: "100%", height: "100%" }}

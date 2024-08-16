@@ -6,8 +6,9 @@ const GeneratedHtml = ({ csvData }) => {
     
     let tableHtml = '';
     if(csvData) {
+        //divide le righe
         const rows = csvData.split('\n').map(row => row.split(','));
-
+        //HTML per la tabella
         tableHtml = `
             <table class="table table-striped">
                 <thead>
@@ -39,7 +40,8 @@ const GeneratedHtml = ({ csvData }) => {
     `;
 
     useEffect(() => {
-        if (csvData) { // Assicurati che il file venga salvato solo se i dati sono presenti
+        if (csvData) { 
+            //salvataggio del file denominato file.html
             const blob = new Blob([fullHtmlContent], { type: 'text/html;charset=utf-8' });
             saveAs(blob, 'file.html');
         }

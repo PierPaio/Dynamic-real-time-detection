@@ -5,10 +5,12 @@ const FileUpload = ({ onFileUpload }) => {
     const[file, setFile] = useState(null);
     const [dragOver, setDragOver] = useState(false)
 
+    //funzione per quando utente seleziona file
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
     };
 
+    //gestione caricamento del file con lettura
     const handleUpload = () => {
         if(file) {
             const reader = new FileReader();
@@ -19,21 +21,27 @@ const FileUpload = ({ onFileUpload }) => {
             reader.readAsText(file);
         }
     };
-
+    
+    //funzione per quando si trascina file
     const handleDragOver = (event) => {
+        //previene evento di default del browser (esempio lo scaricamento)
         event.preventDefault();
         setDragOver(true);
       };
-    
+      
+      //funzione per quando file trascinato fuori dall'area di drop
       const handleDragLeave = () => {
         setDragOver(false);
       };
-    
+      
+      //funzione per gestione del rilascio del file nell'area di drop
       const handleDrop = (event) => {
         event.preventDefault();
         setDragOver(false);
+        //recupero file rilasciato
         const droppedFile = event.dataTransfer.files[0];
         setFile(droppedFile);
+        //leggere e caricare il file
         handleUpload(droppedFile);
       };
     
