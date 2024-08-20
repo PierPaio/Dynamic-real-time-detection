@@ -9,11 +9,16 @@ const GeneratedHtml = ({ csvData }) => {
         tableHtml = `
             <table class="table table-striped">
                 <thead>
-                    <tr>${rows[0].map(header => `<th>${header}</th>`).join('')}</tr>
+                    <tr>${rows[0].map(header => 
+                        `<th>${header}</th>
+                    `).join('')}
+                    </tr>
                 </thead>
                 <tbody>
                     ${rows.slice(1).map(row => `
-                        <tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>
+                        <tr>${row.map(cell =>
+                            `<td>${cell}</td>`).join('')}
+                        </tr>
                     `).join('')}
                 </tbody>
             </table>
