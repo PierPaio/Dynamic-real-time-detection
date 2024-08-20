@@ -1,14 +1,11 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import '../App.css';
 import { saveAs } from "file-saver";
 
 const GeneratedHtml = ({ csvData }) => {
-    
     let tableHtml = '';
-    if(csvData) {
-        //divide le righe
+    if (csvData) {
         const rows = csvData.split('\n').map(row => row.split(','));
-        //HTML per la tabella
         tableHtml = `
             <table class="table table-striped">
                 <thead>
@@ -23,7 +20,6 @@ const GeneratedHtml = ({ csvData }) => {
         `;
     }
 
-    // Contenuto completo del file HTML
     const fullHtmlContent = `
         <!DOCTYPE html>
         <html lang="en">
@@ -40,19 +36,18 @@ const GeneratedHtml = ({ csvData }) => {
     `;
 
     useEffect(() => {
-        if (csvData) { 
-            //salvataggio del file denominato file.html
+        if (csvData) {
             const blob = new Blob([fullHtmlContent], { type: 'text/html;charset=utf-8' });
             saveAs(blob, 'file.html');
         }
-    }, [csvData]); // L'effetto si attiva ogni volta che csvData cambia
+    }, [csvData]);
 
-    if(!csvData) {
+    if (!csvData) {
         return null;
     }
 
     return (
-        <div>
+        <div className="mt-4">
             <h3>Table with data:</h3>
             <div dangerouslySetInnerHTML={{ __html: tableHtml }} />
         </div>
