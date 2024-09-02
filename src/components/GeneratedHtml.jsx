@@ -1,53 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import '../App.css';
-import { saveAs } from "file-saver";
 
 const GeneratedHtml = ({ csvData }) => {
-    let tableHtml = '';
-    if (csvData) {
-        const rows = csvData.split('\n').map(row => row.split(','));
-        tableHtml = `
-            <table class="table table-striped">
-                <thead>
-                    <tr>${rows[0].map(header => 
-                        `<th>${header}</th>
-                    `).join('')}
-                    </tr>
-                </thead>
-                <tbody>
-                    ${rows.slice(1).map(row => `
-                        <tr>${row.map(cell =>
-                            `<td>${cell}</td>`).join('')}
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        `;
-    }
-
-    const fullHtmlContent = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>CSV to HTML</title>
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        </head>
-        <body>
-            ${tableHtml}
-        </body>
-        </html>
-    `;
+    const [tableHtml, setTableHtml] = useState('');
 
     useEffect(() => {
-        if (csvData) {
-            const blob = new Blob([fullHtmlContent], { type: 'text/html;charset=utf-8' });
-            saveAs(blob, 'file.html');
+        if (csvData.length > 0) {
+            // Usa PapaParse per convertire CSV in JSON
+            const headers = Object.keys(csvData[0]);
+            const rows = csvData;
+
+            // Crea l'HTML per l'intestazione della tabella
+            const tableHeader = `<tr>${headers.map(header => 
+                `<th>${header}</th>`
+            ).join('')}</tr>`;
+
+            // Crea l'HTML per il corpo della tabella
+            const tableBody = rows.map(row => `
+                <tr>${headers.map(header =>
+                    `<td>${row[header] || ''}</td>`
+                ).join('')}</tr>`
+            ).join('');
+
+            // Crea l'HTML completo della tabella
+            const newTableHtml = `
+                <table class="table table-striped">
+                    <thead>${tableHeader}</thead>
+                    <tbody>${tableBody}</tbody>
+                </table>
+            `;
+
+            // Aggiorna lo stato con il nuovo HTML
+            setTableHtml(newTableHtml);
         }
     }, [csvData]);
 
-    if (!csvData) {
+    if (!tableHtml) {
         return null;
     }
 

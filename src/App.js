@@ -1,24 +1,47 @@
-import React, { useState } from 'react';
-import './App.css';
-import FileUpload from './components/FileUpload';
+import React, { useState, useEffect } from 'react';
+import CsvPlotter from './components/CsvPlotter'; // Assicurati di avere il percorso corretto
+import Papa from 'papaparse';
+import csvFile from './data/Electric_Production.csv'; 
 import GeneratedHtml from './components/GeneratedHtml';
-import GeneratedPlotly from './components/GeneratedPlotly';
 
-function App() {
 
-  const [csvData, setCsvdata] = useState(null);
+const App = () => {
+  const [csvData, setCsvData] = useState([]);
 
-  const handleFileUpload = (data) => {
-    setCsvdata(data);
-  }
+  const loadCsvData = async () => {
+    try {
+      const response = await fetch(csvFile); 
+      const text = await response.text();
+
+      Papa.parse(text, {
+        header: true,
+        complete: (results) => {
+          setCsvData(results.data);
+        }
+      });
+    } catch (error) {
+      console.error('Error loading CSV file:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadCsvData(); // Carica i dati inizialmente
+
+    const intervalId = setInterval(() => {
+      loadCsvData(); // Ricarica i dati periodicamente
+    }, 5000); // Intervallo di 5 secondi
+
+    return () => clearInterval(intervalId); // Pulizia dell'intervallo
+  }, []);
 
   return (
     <div className="container">
-      <FileUpload onFileUpload={handleFileUpload} />
+      <h1 className='title'>CSV Data Visualization</h1>
+      <p className='title'>File name: {`${csvFile}`}</p>
       <GeneratedHtml csvData={csvData} />
-      <GeneratedPlotly csvData={csvData} />
+      <CsvPlotter data={csvData} /> 
     </div>
   );
-}
+};
 
 export default App;
