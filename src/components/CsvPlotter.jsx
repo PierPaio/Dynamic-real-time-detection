@@ -1,7 +1,7 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
 
-const CsvPlotter = ({ data }) => {
+const CsvPlotter = ({ data, id }) => {
   if (!data || data.length === 0) return;
 
   const headers = Object.keys(data[0]);
@@ -9,7 +9,7 @@ const CsvPlotter = ({ data }) => {
   const yValues = data.map(row => row[headers[1]]);
 
   return (
-    <div style={{ width: '100%' }}>
+    <div id={id} style={{ width: '100%' }}>
             <Plot
                 data={[
                     {
