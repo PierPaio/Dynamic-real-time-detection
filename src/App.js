@@ -12,11 +12,12 @@ const App = () => {
     alert("File updated successfully!")
     try {
       const response = await fetch(csvFile); 
+      //risposta dei dati in formato testo
       const text = await response.text();
 
       Papa.parse(text, {
         header: true, // Indica che la prima riga del CSV contiene le intestazioni delle colonne
-        complete: (results) => {
+        complete: (results) => { //callback che viene invocata quando parsing del CSV è completato
           setCsvData(results.data);
         }
       });

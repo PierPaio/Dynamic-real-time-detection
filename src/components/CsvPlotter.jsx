@@ -4,8 +4,11 @@ import Plot from 'react-plotly.js';
 const CsvPlotter = ({ data, id }) => {
   if (!data || data.length === 0) return;
 
+  //recupera le intestazioni che si trovano nella prima riga del file
   const headers = Object.keys(data[0]);
+  //estrarre tutti valori della prima colonna
   const xValues = data.map(row => row[headers[0]]);
+  //estrarre tutti valori della seconda colonna
   const yValues = data.map(row => row[headers[1]]);
 
   return (
