@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';  // Assumendo che tu stia usando React Router per la navigazione
-import Sidebar from './Sidebar';  // Assicurati di avere il componente Sidebar
+import { Link } from 'react-router-dom'; 
+import Sidebar from './Sidebar'; 
 
 const Header = () => {
   return (
