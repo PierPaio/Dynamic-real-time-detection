@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Percorsi dei file CSV
-const rawDataFilePath = path.join(__dirname, 'src', 'dati dinamici', 'Random.csv'); // Solo Timestamp e Value
-const anomalyDataFilePath = path.join(__dirname, 'src', 'dati dinamici', 'Random_with_anomaly.csv'); // Timestamp, Value, Anomaly
+const rawDataFilePath = path.join(__dirname, 'server', 'data', 'Random.csv'); // Solo Timestamp e Value
+const anomalyDataFilePath = path.join(__dirname, 'server', 'data', 'Random_with_anomaly.csv'); // Timestamp, Value, Anomaly
 
 // Soglia per definire un'anomalia
 const SOGLIA_ANOMALIA = 800;

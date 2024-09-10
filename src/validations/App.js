@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import CsvPlotter from './components/CsvPlotter'; 
+import CsvPlotter from '../components/CsvPlotter'; 
 import Papa from 'papaparse'; 
-import GeneratedHtml from './components/GeneratedHtml';
-import Sidebar from './components/Sidebar';
-import FileUpload from './components/FileUpload';
-import PathInput from './components/PathInput';
-import csvFile from './dati dinamici/Random_with_anomaly.csv';
-import './App.css';
+import GeneratedHtml from '../components/GeneratedHtml';
+import Sidebar from '../layout/Sidebar';
+import FileUpload from '../components/FileUpload';
+import PathInput from '../components/PathInput';
+import csvFile from '../dati dinamici/Random_with_anomaly.csv';
+import '../validations/App.css';
+import CsvViewer from '../components/CsvViewer';
 
 
 const App = () => {
@@ -34,14 +35,6 @@ const App = () => {
     loadCsvData(); // Carica i dati inizialmente
   }, []);
 
-  const handleFileUpload = (data) => {
-    setCsvData(data);
-  };
-
-  const handlePathSubmit = (path) => {
-    loadCsvData(path);
-  };
-
   return (
     
   <Router>
@@ -62,11 +55,13 @@ const App = () => {
               <div className="container">
                 <h1 className="text-center">CSV Data Visualization</h1>
                 <p style={{marginTop: '50px', fontSize: '25px'}}>This is the homepage. Use the sidebar to navigate.</p>
+                <GeneratedHtml csvData={csvData} />
                 <CsvPlotter data={csvData} />
               </div>
             } />
             <Route path="/upload" element={<FileUpload />} />
             <Route path="/path" element={<PathInput />} />
+            <Route path="/csv-viewer" element={<CsvViewer />} />
           </Routes>
         </div>
 

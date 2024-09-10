@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../App.css';
+import '../validations/App.css';
 
 const GeneratedHtml = ({ csvData }) => {
     const [tableHtml, setTableHtml] = useState('');

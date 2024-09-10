@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../App.css'; // Assicurati di creare un file CSS o di aggiungere gli stili nel componente
+import '../validations/App.css';
 import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
