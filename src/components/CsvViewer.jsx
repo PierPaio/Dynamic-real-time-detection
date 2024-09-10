@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import CsvPlotter from './CsvPlotter';
 import GeneratedHtml from './GeneratedHtml';
+import Header from '../layout/Header';
 
 const CsvViewer = () => {
     const location = useLocation();
@@ -29,7 +30,7 @@ const CsvViewer = () => {
         fetchCsvData(); // Fetch initial data
 
         // Set interval to fetch data every 5 seconds
-        const id = setInterval(fetchCsvData, 5000);
+        const id = setInterval(fetchCsvData, 2000);
         setIntervalId(id);
 
         // Cleanup on component unmount
@@ -39,14 +40,18 @@ const CsvViewer = () => {
     return (
         <div className="container">
             <h2>CSV Data Viewer</h2>
+            <br></br>
+            <a href="#plot" className='link-to'>Go to Plot</a>
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
-            {csvData.length > 0 ? <GeneratedHtml csvData={csvData} /> : (
-                <p>No data available</p>
-            )}
-            {csvData.length > 0 ? <CsvPlotter data={csvData} /> : (
-                <p>No data available</p>
-            )}
+            {csvData.length > 0 && <GeneratedHtml csvData={csvData} /> }
+            <div id='plot'>
+                {csvData.length > 0 ? <CsvPlotter data={csvData} /> : (
+                    <p>No data available</p>
+                )}
+            </div>
+            <br></br>
+            <a href="#" className='link-to'>Go to Data</a>
         </div>
     );
 };

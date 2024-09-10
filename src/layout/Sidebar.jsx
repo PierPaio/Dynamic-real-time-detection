@@ -21,7 +21,10 @@ const Sidebar = () => {
       {/* Sidebar */}
       <nav className={`sidebar ${isOpen ? 'open' : ''}`}>
         <ul>
+          <li><h3 className='title-sidebar'>Static Detection</h3></li>
           <li><Link to="/upload">Upload File</Link></li>
+          <br></br>
+          <li><h3 className='title-sidebar'>Dynamic Detection</h3></li>
           <li><Link to="/path">Insert Path File</Link></li>
         </ul>
       </nav>

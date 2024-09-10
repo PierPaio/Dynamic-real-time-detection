@@ -9,69 +9,72 @@ const PathInput = () => {
     const [csvData, setCsvData] = useState([]);
     const navigate = useNavigate();
 
-    const fetchCsvData = async () => {
-        const fullPath = 'http://localhost:3001/data'; // Usa solo l'endpoint /data
-        try {
-            const response = await fetch(fullPath);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-            setCsvData(data);
-        } catch (error) {
-            setError(`Fetch error: ${error.message}`);
-        }
+    // Funzione per recuperare i dati CSV
+    const fetchCsvData = () => {
+        const fullPath = 'http://localhost:3001/data'; 
+        fetch(fullPath)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                setCsvData(data);
+            })
+            .catch(error => {
+                setError(`Fetch error: ${error.message}`);
+            });
     };
 
     useEffect(() => {
         if (path) {
-            const interval = setInterval(fetchCsvData, 5000);
+            const interval = setInterval(fetchCsvData, 2000);
             return () => clearInterval(interval);
         }
     }, [path]);
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         if (!path) return;
-    
+
         setLoading(true);
         setError(null);
-    
-        try {
-            // Assicurati che il corpo sia una stringa JSON valida
-            const response = await fetch('http://localhost:3001/set-csv-path', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ path: path }) // Non usare console.log qui
-            });
-    
+
+        fetch('http://localhost:3001/set-csv-path', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ path: path })
+        })
+        .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-    
-            // Recupera file CSV come testo normale
-            await fetchCsvData();
-    
+            // Recupera i dati CSV e naviga alla pagina
+            return fetchCsvData();
+        })
+        .then(() => {
             // Naviga a /csv-viewer route e passa i dati
             navigate("/csv-viewer", { state: { csvData } });
-        } catch (error) {
+        })
+        .catch(error => {
             setError(`Fetch error: ${error.message}`);
             setLoading(false);
-        }
+        });
     };
-    
 
     return (
         <div className="container">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} style={{marginTop: '50px'}}>
                 <input 
                     type="text" 
                     value={path} 
                     onChange={(e) => setPath(e.target.value)} 
                     placeholder="Enter CSV file path"
-                    style={{ width: "300px", marginBottom: "20px", marginRight: "20px" }} 
+                    style={{ width: "300px", marginBottom: "20px" }} 
                 />
-                <button type="submit" className="btn btn-primary">Load CSV</button>
+                <br></br>
+                <button type="submit" className="btn custom-hover" style={{marginTop: '30px'}}>Load CSV</button>
             </form>
             
             {loading && <p>Loading...</p>}

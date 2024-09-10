@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors());  // Permette tutte le richieste CORS
-app.use(express.json());
+app.use(express.json()); 
 
 let cachedData = [];
 let csvPath = '';

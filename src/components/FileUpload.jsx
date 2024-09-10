@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Plot from 'react-plotly.js';
 import Papa from 'papaparse';
 import CsvPlotter from "./CsvPlotter";
 
@@ -111,7 +110,7 @@ const FileUpload = () => {
       <button 
         type="button" 
         onClick={handleUpload} 
-        className="btn btn-primary custom-hover"
+        className="btn custom-hover"
         style={{ margin: '20px 0' }}
       >
         Upload CSV

@@ -56,4 +56,4 @@ const appendDataToCsv = () => {
 };
 
 // Genera nuovi dati ogni 5 secondi
-setInterval(appendDataToCsv, 5000);
+setInterval(appendDataToCsv, 2000);

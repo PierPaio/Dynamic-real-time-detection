@@ -9,6 +9,8 @@ import PathInput from '../components/PathInput';
 import csvFile from '../dati dinamici/Random_with_anomaly.csv';
 import '../validations/App.css';
 import CsvViewer from '../components/CsvViewer';
+import Header from '../layout/Header';
+import Footer from '../layout/Footer';
 
 
 const App = () => {
@@ -39,24 +41,13 @@ const App = () => {
     
   <Router>
       <div className="wrapper">
-        <div className='header' id='header'>
-          <Sidebar /> 
-          <div className='menu-icon'>
-            <Link to="/" style={{ textDecoration: 'none', color: 'white', paddingRight: '10px' }}>
-              <i className='bx bxs-home'></i>
-            </Link>
-          </div>
-        </div>
-
-        {/* Aggiungi il contenitore flessibile per il contenuto */}
+        <Header />
         <div className="content">
           <Routes>
             <Route path="/" element={
               <div className="container">
-                <h1 className="text-center">CSV Data Visualization</h1>
+                <h1 className="text-center">Welcome to our app</h1>
                 <p style={{marginTop: '50px', fontSize: '25px'}}>This is the homepage. Use the sidebar to navigate.</p>
-                <GeneratedHtml csvData={csvData} />
-                <CsvPlotter data={csvData} />
               </div>
             } />
             <Route path="/upload" element={<FileUpload />} />
@@ -66,9 +57,7 @@ const App = () => {
         </div>
 
         {/* Footer in fondo alla pagina */}
-        <div className='footer'>
-          <p>&copy; 2024 Pierpaolo Paio | Tutti i diritti riservati.</p>
-        </div>
+        <Footer />
       </div>
   </Router>
   );
