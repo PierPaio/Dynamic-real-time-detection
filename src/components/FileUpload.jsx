@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Papa from 'papaparse';
 import CsvPlotter from "./CsvPlotter";
+import GeneratedHtml from "./GeneratedHtml";
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -56,66 +57,57 @@ const FileUpload = () => {
     setFile(droppedFile);
   };
 
-  const headers = csvData.length ? Object.keys(csvData[0]) : [];
-
-  const xValues = csvData.map(row => row[headers[0]]);
-  const yValues = csvData.map(row => row[headers[1]]);
-  const anomalyValues = csvData.map(row => row[headers[2]]);
-
-  //Separo dati in base a se è anomalia o meno
-  const normalPoints = {
-    x: xValues.filter((_, i) => anomalyValues[i] === '0'), 
-    y: yValues.filter((_, i) => anomalyValues[i] === '0'),
-    mode: "markers",
-    marker: { color: 'green' },
-    name: 'Normal'
-  };
-
-  const anomalyPoints = {
-    x: xValues.filter((_, i) => anomalyValues[i] === '1'), 
-    y: yValues.filter((_, i) => anomalyValues[i] === '1'),
-    mode: "markers",
-    marker: { color: 'red' },
-    name: 'Anomaly'
-  };
+  
 
   return (
-    <div className="container">
-      <input 
-        type="file" 
-        accept=".csv" 
-        onChange={handleFileChange} 
-        style={{ display: 'none' }} 
-        id="file-input" 
-      />
-      <label 
-        htmlFor="file-input" 
-        onDragOver={handleDragOver} 
-        onDragLeave={handleDragLeave} 
-        onDrop={handleDrop} 
-        style={{
-          border: '2px dashed #ccc',
-          padding: '40px',
-          textAlign: 'center',
-          backgroundColor: dragOver ? '#f0f0f0' : '#fff',
-          cursor: 'pointer',
-          color: "black",
-          borderRadius: '6px',
-          marginBottom: '20px',
-          transition: 'background-color 0.3s, color 0.3s'
-        }}
-      >
-        {file ? file.name : 'Drag & Drop your CSV file here or click to select'}
-      </label>
-      <button 
-        type="button" 
-        onClick={handleUpload} 
-        className="btn custom-hover"
-        style={{ margin: '20px 0' }}
-      >
-        Upload CSV
-      </button>
-      {csvData.length > 0 && <CsvPlotter data={csvData} />}
+    <div className="container" id="data">
+      {csvData.length <= 0 ? <>
+          <input 
+            type="file" 
+            accept=".csv" 
+            onChange={handleFileChange} 
+            style={{ display: 'none' }} 
+            id="file-input" 
+          />
+          <label 
+            htmlFor="file-input" 
+            onDragOver={handleDragOver} 
+            onDragLeave={handleDragLeave} 
+            onDrop={handleDrop} 
+            style={{
+              border: '2px dashed #ccc',
+              padding: '40px',
+              textAlign: 'center',
+              backgroundColor: dragOver ? '#f0f0f0' : '#fff',
+              cursor: 'pointer',
+              color: "black",
+              borderRadius: '6px',
+              marginBottom: '20px',
+              transition: 'background-color 0.3s, color 0.3s'
+            }}
+          >
+            {file ? file.name : 'Drag & Drop your CSV file here or click to select'}
+          </label>
+          <button 
+            type="button" 
+            onClick={handleUpload} 
+            className="btn custom-hover"
+            style={{ margin: '20px 0' }}
+          >
+            Upload CSV
+          </button>
+        </> : 
+        <>
+          <h2>CSV Data Viewer</h2>
+          <br></br>
+          <a href="#plot" className="link-to">Go to Plot</a>
+          <GeneratedHtml csvData={csvData} />
+          <div id='plot'>
+                <CsvPlotter data={csvData} /> 
+          </div>
+          <br></br>
+          <a href="#data" className="link-to">Go to Data</a>
+        </> }      
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import CsvPlotter from './CsvPlotter';
 import GeneratedHtml from './GeneratedHtml';
 
@@ -37,7 +37,7 @@ const CsvViewer = () => {
     }, []);
 
     return (
-        <div className="container">
+        <div className="container" id='data'>
             <h2>CSV Data Viewer</h2>
             <br></br>
             <a href="#plot" className='link-to'>Go to Plot</a>
@@ -50,7 +50,7 @@ const CsvViewer = () => {
                 )}
             </div>
             <br></br>
-            <a href="#" className='link-to'>Go to Data</a>
+            <a href="#data" className='link-to'>Go to Data</a>
         </div>
     );
 };
