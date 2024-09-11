@@ -57,8 +57,6 @@ const FileUpload = () => {
     setFile(droppedFile);
   };
 
-  
-
   return (
     <div className="container" id="data">
       {csvData.length <= 0 ? <>

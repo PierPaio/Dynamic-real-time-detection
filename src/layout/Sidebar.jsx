@@ -18,7 +18,6 @@ const Sidebar = () => {
         <h1 className="title">Dynamic Real-Time Detection</h1>
       </div>
 
-      {/* Sidebar */}
       <nav className={`sidebar ${isOpen ? 'open' : ''}`}>
         <ul>
           <li><h3 className='title-sidebar'>Static Detection</h3></li>

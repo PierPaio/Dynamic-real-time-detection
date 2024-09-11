@@ -11,15 +11,15 @@ const PathInput = () => {
     // Funzione per recuperare i dati CSV
     const fetchCsvData = () => {
         const fullPath = 'http://localhost:3001/data'; 
-        fetch(fullPath)
+        fetch(fullPath) //invio richiesta GET 
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                return response.json();
+                return response.json(); //converto in json
             })
             .then(data => {
-                setCsvData(data);
+                setCsvData(data); //setto dati recuperati
             })
             .catch(error => {
                 setError(`Fetch error: ${error.message}`);
@@ -28,7 +28,7 @@ const PathInput = () => {
 
     useEffect(() => {
         if (path) {
-            const interval = setInterval(fetchCsvData, 2000);
+            const interval = setInterval(fetchCsvData, 2000); //richiamo funzione ogni 2 secondi per aggiornare dati
             return () => clearInterval(interval);
         }
     }, [path]);
@@ -43,17 +43,17 @@ const PathInput = () => {
         fetch('http://localhost:3001/set-csv-path', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path: path })
+            body: JSON.stringify({ path: path }) //invio richiesta POST per impostare il percorso del file
         })
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            // Recupera i dati CSV e naviga alla pagina
+            // Recupero i dati CSV 
             return fetchCsvData();
         })
         .then(() => {
-            // Naviga a /csv-viewer route e passa i dati
+            // Navigo a /csv-viewer route e passa i dati
             navigate("/csv-viewer", { state: { csvData } });
         })
         .catch(error => {

@@ -5,19 +5,19 @@ import GeneratedHtml from './GeneratedHtml';
 
 const CsvViewer = () => {
     const location = useLocation();
-    const [csvData, setCsvData] = useState(location.state?.csvData || []);
+    const [csvData, setCsvData] = useState(location.state?.csvData || []); //se non è vuoto, contiene dati da server
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [intervalId, setIntervalId] = useState(null);
 
     const fetchCsvData = async () => {
         try {
-            const response = await fetch("http://localhost:3001/data");
+            const response = await fetch("http://localhost:3001/data"); //faccio richiesta a server 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
-            setCsvData(data);
+            const data = await response.json(); //converto dati in json
+            setCsvData(data); //memorizzo i dati
             setLoading(false);
         } catch (error) {
             setError(`Fetch error: ${error.message}`);
@@ -26,13 +26,13 @@ const CsvViewer = () => {
     };
 
     useEffect(() => {
-        fetchCsvData(); // Fetch initial data
+        fetchCsvData(); // setto dati iniziali
 
-        // Set interval to fetch data every 5 seconds
+        // Intervallo per aggiornamento ogni 2 secondi
         const id = setInterval(fetchCsvData, 2000);
         setIntervalId(id);
 
-        // Cleanup on component unmount
+        // Pulisco intervallo quando smonto componente
         return () => clearInterval(id);
     }, []);
 
